@@ -7,7 +7,10 @@ import com.enesaksoy.flightsearchapi.dto.FlightUpdateRequest;
 
 import java.util.List;
 
-public interface AirportControllerContract {
-
-
+public interface FlightControllerContract {
+    List<FlightDTO> findAll();
+    FlightDTO findById(Long id);
+    void delete(FlightDeleteRequest flightDeleteRequest);
+    FlightDTO update(Long id, FlightUpdateRequest flightUpdateRequest);
+    FlightDTO save (FlightSaveRequest flightSaveRequest);
 }
