@@ -2,11 +2,10 @@ package com.enesaksoy.flightsearchapi.controller;
 
 import com.enesaksoy.flightsearchapi.RestResponse;
 import com.enesaksoy.flightsearchapi.controller.contract.FlightControllerContract;
-import com.enesaksoy.flightsearchapi.dto.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.FlightDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.FlightSaveRequest;
-import com.enesaksoy.flightsearchapi.dto.FlightUpdateRequest;
-import com.enesaksoy.flightsearchapi.entity.Flight;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightDeleteRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,6 @@ public class FlightController {
         List<FlightDTO> flightDTOList = flightControllerContract.findAll();
         return  ResponseEntity.ok(RestResponse.of(flightDTOList));
     }
-
 
     @DeleteMapping
     public ResponseEntity<RestResponse<String>> delete(@RequestBody FlightDeleteRequest flightDeleteRequest){

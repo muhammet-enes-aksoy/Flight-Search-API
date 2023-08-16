@@ -1,4 +1,4 @@
-package com.enesaksoy.flightsearchapi.dto;
+package com.enesaksoy.flightsearchapi.dto.flight;
 
 import lombok.Getter;
 import lombok.Setter;

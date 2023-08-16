@@ -1,7 +1,7 @@
 package com.enesaksoy.flightsearchapi.mapper;
 
-import com.enesaksoy.flightsearchapi.dto.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.FlightSaveRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
 import com.enesaksoy.flightsearchapi.entity.Flight;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

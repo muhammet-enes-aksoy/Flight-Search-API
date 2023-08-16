@@ -1,9 +1,9 @@
 package com.enesaksoy.flightsearchapi.controller.contract;
 
-import com.enesaksoy.flightsearchapi.dto.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.FlightDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.FlightSaveRequest;
-import com.enesaksoy.flightsearchapi.dto.FlightUpdateRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightDeleteRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
 
 import java.util.List;
 

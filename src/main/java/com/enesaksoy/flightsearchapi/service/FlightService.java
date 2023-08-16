@@ -1,11 +1,10 @@
 package com.enesaksoy.flightsearchapi.service;
 
-import com.enesaksoy.flightsearchapi.dto.FlightUpdateRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
 import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.repository.FlightRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,13 +24,13 @@ public class FlightService {
         return flightRepository.findById(id).orElseThrow();
     }
 
-    public Flight createFlight(Flight flight) {
+    public Flight saveFlight(Flight flight) {
         return flightRepository.save(flight);
     }
 
     public Flight updateFlight(Long id, FlightUpdateRequest flightUpdateRequest) {
         Flight existingFlight = flightRepository.findById(id).orElseThrow();
-        
+
         existingFlight.setDepartureAirportCode(flightUpdateRequest.getDepartureAirportCode());
         existingFlight.setArrivalAirportCode(flightUpdateRequest.getArrivalAirportCode());
         existingFlight.setPrice(flightUpdateRequest.getPrice());
