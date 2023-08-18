@@ -54,9 +54,16 @@ public class FlightController {
     @GetMapping("/search")
     public List<Flight> searchFlights(@RequestParam String departureAirportCode,
                                       @RequestParam String arrivalAirportCode,
-                                      @RequestParam LocalDateTime departureDate,
-                                      @RequestParam(required = false) LocalDateTime returnDate) {
-        return flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDate, returnDate);
+                                      @RequestParam LocalDate departureDate,
+                                      @RequestParam(required = false) LocalDate returnDate) {
+
+        LocalDateTime departureDateTime = departureDate.atStartOfDay();
+        LocalDateTime returnDateTime = null;
+        if(returnDate != null){
+            returnDateTime = returnDate.atStartOfDay();
+        }
+
+        return flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime);
     }
 
 }
