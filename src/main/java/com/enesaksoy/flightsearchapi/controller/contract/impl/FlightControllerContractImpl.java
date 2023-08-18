@@ -1,10 +1,7 @@
 package com.enesaksoy.flightsearchapi.controller.contract.impl;
 
 import com.enesaksoy.flightsearchapi.controller.contract.FlightControllerContract;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.*;
 
 import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.mapper.FlightMapper;
@@ -47,4 +44,5 @@ public class FlightControllerContractImpl implements FlightControllerContract {
         flight = flightService.saveFlight(flight);
         return FlightMapper.INSTANCE.convertToFlightDTO(flight);
     }
+
 }

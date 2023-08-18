@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+
 @Getter
 @Setter
 public class FlightSaveRequest {
@@ -13,4 +14,5 @@ public class FlightSaveRequest {
     private LocalDateTime departureDateTime;
     private LocalDateTime arrivalDateTime;
     private double price;
+
 }

@@ -15,3 +15,4 @@ public class FlightDTO {
     private LocalDateTime arrivalDateTime;
     private double price;
 }
+

@@ -2,14 +2,15 @@ package com.enesaksoy.flightsearchapi.controller;
 
 import com.enesaksoy.flightsearchapi.RestResponse;
 import com.enesaksoy.flightsearchapi.controller.contract.FlightControllerContract;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.*;
+import com.enesaksoy.flightsearchapi.entity.Flight;
+import com.enesaksoy.flightsearchapi.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,7 @@ import java.util.List;
 public class FlightController {
 
     private final FlightControllerContract flightControllerContract;
+    private final FlightService flightService;
 
     @GetMapping
     public ResponseEntity<RestResponse<List<FlightDTO>>> findAll(){
@@ -49,5 +51,12 @@ public class FlightController {
         return ResponseEntity.ok(RestResponse.of(flightDTO));
     }
 
+    @GetMapping("/search")
+    public List<Flight> searchFlights(@RequestParam String departureAirportCode,
+                                      @RequestParam String arrivalAirportCode,
+                                      @RequestParam LocalDateTime departureDate,
+                                      @RequestParam(required = false) LocalDateTime returnDate) {
+        return flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDate, returnDate);
+    }
 
 }

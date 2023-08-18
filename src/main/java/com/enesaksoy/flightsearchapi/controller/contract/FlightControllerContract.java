@@ -1,9 +1,6 @@
 package com.enesaksoy.flightsearchapi.controller.contract;
 
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDTO;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightSaveRequest;
-import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
+import com.enesaksoy.flightsearchapi.dto.flight.*;
 
 import java.util.List;
 
@@ -13,4 +10,6 @@ public interface FlightControllerContract {
     void delete(FlightDeleteRequest flightDeleteRequest);
     FlightDTO update(Long id, FlightUpdateRequest flightUpdateRequest);
     FlightDTO save (FlightSaveRequest flightSaveRequest);
+
+
 }

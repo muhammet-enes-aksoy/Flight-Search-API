@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .permitAll()
                 //.requestMatchers("/api/v1/weather/**").hasAnyRole("USER")
                 .requestMatchers("/api/v1/users/**").hasAnyRole("USER")
+                .requestMatchers("/api/v1/flights/**").hasAnyRole("USER")
+                .requestMatchers("/api/v1/airports/**").hasAnyRole("USER")
                 .anyRequest()
                 .authenticated()
                 .and()

@@ -5,6 +5,8 @@ import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.repository.FlightRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -47,15 +49,16 @@ public class FlightService {
         flightRepository.delete(existingFlight);
     }
 
-   /* public List<Flight> searchOneWayFlights(String departureAirport, String arrivalAirport, LocalDateTime departureDateTime) {
-        return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
-                departureAirport, arrivalAirport, departureDateTime
-        );
+    public List<Flight> searchFlights(String departureAirportCode, String arrivalAirportCode,
+                                      LocalDateTime departureDate, LocalDateTime returnDate) {
+        if (returnDate != null) {
+            return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
+                    departureAirportCode, arrivalAirportCode, departureDate, returnDate
+            );
+        } else {
+            return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
+                    departureAirportCode, arrivalAirportCode, departureDate
+            );
+        }
     }
-
-    public List<Flight> searchRoundTripFlights(String departureAirport, String arrivalAirport, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime) {
-        return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
-                departureAirport, arrivalAirport, departureDateTime, arrivalDateTime
-        );
-    }*/
 }
