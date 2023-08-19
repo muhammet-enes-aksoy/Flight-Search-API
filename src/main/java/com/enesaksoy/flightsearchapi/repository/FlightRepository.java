@@ -18,7 +18,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
 
     @Query("SELECT f FROM Flight f WHERE f.departureAirportCode = ?1 AND f.arrivalAirportCode = ?2 " +
-            "AND DATE(f.departureDateTime) = DATE(?3)")
+            "AND DATE(f.departureDateTime) = DATE(?3) AND f.arrivalDateTime IS NULL")
     List<Flight> findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
             String departureAirportCode, String arrivalAirportCode, LocalDateTime departureDate
     );

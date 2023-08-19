@@ -3,6 +3,7 @@ package com.enesaksoy.flightsearchapi.service;
 import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
 import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.repository.FlightRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,7 +12,6 @@ import java.util.List;
 
 @Service
 public class FlightService {
-
     private final FlightRepository flightRepository;
 
     public FlightService(FlightRepository flightRepository) {
@@ -53,12 +53,11 @@ public class FlightService {
                                       LocalDateTime departureDate, LocalDateTime returnDate) {
         if (returnDate != null) {
             return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
-                    departureAirportCode, arrivalAirportCode, departureDate, returnDate
-            );
-        } else {
+                    departureAirportCode, arrivalAirportCode, departureDate, returnDate);
+        }
+        else {
             return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
-                    departureAirportCode, arrivalAirportCode, departureDate
-            );
+                    departureAirportCode, arrivalAirportCode, departureDate);
         }
     }
 }
