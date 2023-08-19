@@ -7,10 +7,12 @@ import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -51,19 +53,23 @@ public class FlightController {
         return ResponseEntity.ok(RestResponse.of(flightDTO));
     }
 
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/search")
-    public List<Flight> searchFlights(@RequestParam String departureAirportCode,
-                                      @RequestParam String arrivalAirportCode,
-                                      @RequestParam LocalDate departureDate,
-                                      @RequestParam(required = false) LocalDate returnDate) {
+    public List<List<Flight>> searchFlights(@RequestParam String departureAirportCode,
+                                            @RequestParam String arrivalAirportCode,
+                                            @RequestParam LocalDate departureDate,
+                                            @RequestParam(required = false) LocalDate returnDate) {
 
         LocalDateTime departureDateTime = departureDate.atStartOfDay();
         LocalDateTime returnDateTime = null;
         if(returnDate != null){
             returnDateTime = returnDate.atStartOfDay();
+            return flightService.findFlightsByDepartureAndReturnDate(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime);
+        }
+        else{
+            return Collections.singletonList(flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime));
         }
 
-        return flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime);
     }
 
 }

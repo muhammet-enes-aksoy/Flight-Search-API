@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -59,5 +61,31 @@ public class FlightService {
             return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
                     departureAirportCode, arrivalAirportCode, departureDate);
         }
+    }
+
+    public List<List<Flight>> findFlightsByDepartureAndReturnDate(
+            String departureAirportCode, String arrivalAirportCode, LocalDateTime departureDate, LocalDateTime returnDate) {
+        List<Flight> matchingDepartureFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
+                departureAirportCode, arrivalAirportCode, departureDate, returnDate
+        );
+
+        List<Flight> matchingReturnFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
+                arrivalAirportCode, departureAirportCode, returnDate, departureDate
+        );
+
+        List<List<Flight>> result = new ArrayList<>();
+
+        for (Flight departureFlight : matchingDepartureFlights) {
+            List<Flight> flightPair = new ArrayList<>();
+            flightPair.add(departureFlight);
+
+            for (Flight returnFlight : matchingReturnFlights) {
+                flightPair.add(returnFlight);
+                result.add(new ArrayList<>(flightPair));
+                flightPair.remove(returnFlight);
+            }
+        }
+
+        return result;
     }
 }
