@@ -3,7 +3,6 @@ package com.enesaksoy.flightsearchapi.controller;
 import com.enesaksoy.flightsearchapi.RestResponse;
 import com.enesaksoy.flightsearchapi.controller.contract.FlightControllerContract;
 import com.enesaksoy.flightsearchapi.dto.flight.*;
-import com.enesaksoy.flightsearchapi.entity.Flight;
 import com.enesaksoy.flightsearchapi.service.FlightService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,21 +54,24 @@ public class FlightController {
 
     @PreAuthorize("hasAnyRole('USER')")
     @GetMapping("/search")
-    public List<List<Flight>> searchFlights(@RequestParam String departureAirportCode,
-                                            @RequestParam String arrivalAirportCode,
-                                            @RequestParam LocalDate departureDate,
-                                            @RequestParam(required = false) LocalDate returnDate) {
+    public List<List<FlightSearchResponse>> searchFlights(@RequestParam String departureAirportCode,
+                                                          @RequestParam String arrivalAirportCode,
+                                                          @RequestParam LocalDate departureDate,
+                                                          @RequestParam(required = false) LocalDate returnDate) {
 
         LocalDateTime departureDateTime = departureDate.atStartOfDay();
         LocalDateTime returnDateTime = null;
-        if(returnDate != null){
+        List<List<FlightSearchResponse>> result;
+
+        if (returnDate != null) {
             returnDateTime = returnDate.atStartOfDay();
-            return flightService.findFlightsByDepartureAndReturnDate(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime);
-        }
-        else{
-            return Collections.singletonList(flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime));
+            result = flightService.findFlightsByDepartureAndReturnDate(departureAirportCode, arrivalAirportCode, departureDateTime, returnDateTime);
+        } else {
+            List<FlightSearchResponse> searchResults = flightService.searchFlights(departureAirportCode, arrivalAirportCode, departureDateTime);
+            result = Collections.singletonList(searchResults);
         }
 
+        return result;
     }
 
 }

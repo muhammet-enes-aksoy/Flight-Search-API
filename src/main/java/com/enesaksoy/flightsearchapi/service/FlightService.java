@@ -1,7 +1,9 @@
 package com.enesaksoy.flightsearchapi.service;
 
+import com.enesaksoy.flightsearchapi.dto.flight.FlightSearchResponse;
 import com.enesaksoy.flightsearchapi.dto.flight.FlightUpdateRequest;
 import com.enesaksoy.flightsearchapi.entity.Flight;
+import com.enesaksoy.flightsearchapi.mapper.FlightMapper;
 import com.enesaksoy.flightsearchapi.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,38 +53,34 @@ public class FlightService {
         flightRepository.delete(existingFlight);
     }
 
-    public List<Flight> searchFlights(String departureAirportCode, String arrivalAirportCode,
-                                      LocalDateTime departureDate, LocalDateTime returnDate) {
-        if (returnDate != null) {
-            return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
-                    departureAirportCode, arrivalAirportCode, departureDate, returnDate);
-        }
-        else {
-            return flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
+    public List<FlightSearchResponse> searchFlights(String departureAirportCode, String arrivalAirportCode,
+                                                    LocalDateTime departureDate) {
+        List<Flight> flights;
+
+        flights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
                     departureAirportCode, arrivalAirportCode, departureDate);
-        }
+
+        return FlightMapper.INSTANCE.convertToFlightSearchResponseList(flights);
     }
 
-    public List<List<Flight>> findFlightsByDepartureAndReturnDate(
+    public List<List<FlightSearchResponse>> findFlightsByDepartureAndReturnDate(
             String departureAirportCode, String arrivalAirportCode, LocalDateTime departureDate, LocalDateTime returnDate) {
-        List<Flight> matchingDepartureFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
-                departureAirportCode, arrivalAirportCode, departureDate, returnDate
-        );
+        List<Flight> matchingDepartureFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
+                departureAirportCode, arrivalAirportCode, departureDate);
 
-        List<Flight> matchingReturnFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTimeAndArrivalDateTime(
-                arrivalAirportCode, departureAirportCode, returnDate, departureDate
-        );
+        List<Flight> matchingReturnFlights = flightRepository.findByDepartureAirportCodeAndArrivalAirportCodeAndDepartureDateTime(
+                arrivalAirportCode, departureAirportCode, returnDate);
 
-        List<List<Flight>> result = new ArrayList<>();
+        List<List<FlightSearchResponse>> result = new ArrayList<>();
 
         for (Flight departureFlight : matchingDepartureFlights) {
-            List<Flight> flightPair = new ArrayList<>();
-            flightPair.add(departureFlight);
+            List<FlightSearchResponse> flightPair = new ArrayList<>();
+            flightPair.add(FlightMapper.INSTANCE.convertToFlightSearchResponse(departureFlight));
 
             for (Flight returnFlight : matchingReturnFlights) {
-                flightPair.add(returnFlight);
+                flightPair.add(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
                 result.add(new ArrayList<>(flightPair));
-                flightPair.remove(returnFlight);
+                flightPair.remove(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
             }
         }
 
