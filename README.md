@@ -9,9 +9,9 @@ A backend API will be developed for a flight search application.
 - Crud: A CRUD structure needs to be designed.
 - API: A Search API needs to be developed that lists flights matching the given departure location, arrival location, departure date, and return date.
 - REST should be used to expose services externally.
-- An Authentication structure should be implemented to verify the user's identity and grant authorization.
+- Authentication: An Authentication structure should be implemented to verify the user's identity and grant authorization.
 - Scheduled background jobs: A scheduled job should be created that sends a request to a third-party API every day to retrieve flight information and store it in the database.
-- Git: The Git version control system should be used. The project will be uploaded to GitHub.
+- Git: The Git version control system should be used. 
 - Documentation: API documentation should be done using Swagger.
   
 ## Technologies
