@@ -16,7 +16,6 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,12 +34,12 @@ public class FlightDataUpdater {
         this.airportRepository = airportRepository;
     }
 
-    @Scheduled(cron = "0 0 0 * * ?") // Schedule to run every minute
+    @Scheduled(cron = "0 0 0 * * ?")
     public void updateFlightData() {
         System.out.println("Scheduled job started at: " + LocalDateTime.now());
         RestTemplate restTemplate = new RestTemplate();
 
-        // Simulate mock API response
+
         FlightApiResponse response = createMockApiResponse();
 
         if (response != null) {
@@ -57,17 +56,17 @@ public class FlightDataUpdater {
 
                 Flight flight = new Flight();
                 flight.setDepartureAirportCode(randomDepartureAirport.getCity());
-                //flight.setArrivalAirportCode(randomArrivalAirport.getCity());
+                flight.setArrivalAirportCode(randomArrivalAirport.getCity());
 
                 LocalDateTime now = LocalDateTime.now();
                 LocalTime randomDepartureTime = generateRandomDepartureTime();
                 LocalDate randomDepartureDate = generateRandomDepartureDate(now);
                 LocalDateTime randomDepartureDateTime = randomDepartureDate.atTime(randomDepartureTime);
-                LocalDateTime randomArrivalDateTime = randomDepartureDateTime.plusHours(2); // Assuming 2 hours flight time
+                //LocalDateTime randomArrivalDateTime = randomDepartureDateTime.plusHours(2);
                 int randomPrice = generateRandomPrice();
 
                 flight.setDepartureDateTime(randomDepartureDateTime);
-                flight.setArrivalDateTime(randomArrivalDateTime);
+                //flight.setArrivalDateTime(randomArrivalDateTime);
                 flight.setPrice(randomPrice);
 
                 flightRepository.save(flight);
@@ -85,13 +84,13 @@ public class FlightDataUpdater {
     }
 
     private LocalDate generateRandomDepartureDate(LocalDateTime baseDateTime) {
-        long daysToAdd = ThreadLocalRandom.current().nextLong(1, 8); // Between 1 and 7 days ahead
+        long daysToAdd = ThreadLocalRandom.current().nextLong(1, 8);
         return baseDateTime.toLocalDate().plusDays(daysToAdd);
     }
 
     private LocalTime generateRandomDepartureTime() {
-        int randomHour = ThreadLocalRandom.current().nextInt(0, 24); // Between 0 and 23 hours
-        int randomMinute = ThreadLocalRandom.current().nextInt(0, 4) * 15; // 15-minute intervals
+        int randomHour = ThreadLocalRandom.current().nextInt(0, 24);
+        int randomMinute = ThreadLocalRandom.current().nextInt(0, 4) * 15;
         return LocalTime.of(randomHour, randomMinute);
     }
 
@@ -108,18 +107,14 @@ public class FlightDataUpdater {
         FlightApiResponse response = new FlightApiResponse();
         List<FlightDTO> flightDtoList = new ArrayList<>();
 
-        // Simulated mock flight data for testing purposes
         FlightDTO flightDto1 = new FlightDTO();
         flightDto1.setDepartureAirportCode("ABC");
         flightDto1.setArrivalAirportCode("XYZ");
-        // Set other properties
 
         FlightDTO flightDto2 = new FlightDTO();
         flightDto2.setDepartureAirportCode("DEF");
         flightDto2.setArrivalAirportCode("GHI");
-        // Set other properties
 
-        // Add simulated flight data to the list
         flightDtoList.add(flightDto1);
         flightDtoList.add(flightDto2);
 
