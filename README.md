@@ -7,7 +7,7 @@ A backend API will be developed for a flight search application.
 
 - Data Modeling: Design and Modeling of Information to be Stored in a Database
 - Crud: A CRUD structure needs to be designed.
-- A Search API needs to be developed that lists flights matching the given departure location, arrival location, departure date, and return date. If the return date is not provided, it's a one-way flight; if provided, it's a round-trip flight. For a one-way flight, a single flight record should be provided; for a round-trip flight, two flight records should be provided.
+- API: A Search API needs to be developed that lists flights matching the given departure location, arrival location, departure date, and return date.
 - REST should be used to expose services externally.
 - An Authentication structure should be implemented to verify the user's identity and grant authorization.
 - Scheduled background jobs: A scheduled job should be created that sends a request to a third-party API every day to retrieve flight information and store it in the database.
