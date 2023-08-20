@@ -78,9 +78,12 @@ public class FlightService {
             flightPair.add(FlightMapper.INSTANCE.convertToFlightSearchResponse(departureFlight));
 
             for (Flight returnFlight : matchingReturnFlights) {
-                flightPair.add(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
-                result.add(new ArrayList<>(flightPair));
-                flightPair.remove(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
+                // Eğer dönüş tarihi gidiş tarihinden daha erkense bu uçuşu listeye ekleme
+                if (!returnFlight.getDepartureDateTime().isBefore(departureFlight.getDepartureDateTime())) {
+                    flightPair.add(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
+                    result.add(new ArrayList<>(flightPair));
+                    flightPair.remove(FlightMapper.INSTANCE.convertToFlightSearchResponse(returnFlight));
+                }
             }
         }
 
