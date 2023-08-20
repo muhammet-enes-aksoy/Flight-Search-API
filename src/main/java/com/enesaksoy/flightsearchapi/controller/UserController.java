@@ -4,7 +4,6 @@ import com.enesaksoy.flightsearchapi.RestResponse;
 import com.enesaksoy.flightsearchapi.controller.contract.UserControllerContract;
 import com.enesaksoy.flightsearchapi.dto.user.UserDTO;
 import com.enesaksoy.flightsearchapi.dto.user.UserDeleteRequest;
-import com.enesaksoy.flightsearchapi.dto.user.UserUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,16 +37,5 @@ public class UserController {
         return ResponseEntity.ok(RestResponse.of(userDTO));
     }
 
-    @GetMapping("/{username}")
-    public ResponseEntity<RestResponse<UserDTO>> findByUsername(@PathVariable String username){
-        UserDTO userDTO = userControllerContract.findByUsername(username);
-        return ResponseEntity.ok(RestResponse.of(userDTO));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<RestResponse<UserDTO>> update(@PathVariable Long id, @RequestBody UserUpdateRequest userUpdateRequest){
-        UserDTO userDTO = userControllerContract.update(id, userUpdateRequest);
-        return ResponseEntity.ok(RestResponse.of(userDTO));
-    }
 
 }

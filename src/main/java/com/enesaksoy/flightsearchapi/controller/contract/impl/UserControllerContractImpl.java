@@ -4,7 +4,6 @@ import com.enesaksoy.flightsearchapi.controller.contract.UserControllerContract;
 import com.enesaksoy.flightsearchapi.dto.user.UserDTO;
 import com.enesaksoy.flightsearchapi.dto.user.UserDeleteRequest;
 import com.enesaksoy.flightsearchapi.dto.user.UserRegisterRequest;
-import com.enesaksoy.flightsearchapi.dto.user.UserUpdateRequest;
 import com.enesaksoy.flightsearchapi.entity.User;
 import com.enesaksoy.flightsearchapi.mapper.UserMapper;
 import com.enesaksoy.flightsearchapi.service.UserEntityService;
@@ -32,21 +31,8 @@ public class UserControllerContractImpl implements UserControllerContract {
     }
 
     @Override
-    public UserDTO findByUsername(String username) {
-            User user = userEntityService.findByUsername(username);
-            return UserMapper.INSTANCE.convertToUserDTO(user);
-
-    }
-
-    @Override
     public void delete(UserDeleteRequest userDeleteRequest) {
             userEntityService.deleteUser(userDeleteRequest.getId());
-    }
-
-    @Override
-    public UserDTO update(Long id, UserUpdateRequest userUpdateRequest){
-        return userEntityService.updateUser(id, userUpdateRequest);
-
     }
 
     @Override
